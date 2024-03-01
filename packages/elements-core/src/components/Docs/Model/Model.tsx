@@ -70,7 +70,7 @@ const ModelComponent: React.FC<ModelProps> = ({
   const descriptionChanged = nodeHasChanged?.({ nodeId, attr: 'description' });
   const description = (
     <VStack spacing={10}>
-      {data.description && data.type === 'object' && (
+      {data.description && (
         <Box pos="relative">
           <MarkdownViewer role="textbox" markdown={data.description} />
           <NodeAnnotation change={descriptionChanged} />
@@ -82,7 +82,7 @@ const ModelComponent: React.FC<ModelProps> = ({
       <JsonSchemaViewer
         resolveRef={resolveRef}
         maxRefDepth={maxRefDepth}
-        schema={getOriginalObject(data)}
+        schema={Object.assign(data.type === 'object' ? {} : { description: undefined }, getOriginalObject(data))}
         nodeHasChanged={nodeHasChanged}
         skipTopLevelDescription
       />
