@@ -82,7 +82,7 @@ const ModelComponent: React.FC<ModelProps> = ({
       <JsonSchemaViewer
         resolveRef={resolveRef}
         maxRefDepth={maxRefDepth}
-        schema={Object.assign(data.type === 'object' ? {} : { description: undefined }, getOriginalObject(data))}
+        schema={Object.assign({}, getOriginalObject(data), data.type === 'object' ? {} : { description: undefined })}
         nodeHasChanged={nodeHasChanged}
         skipTopLevelDescription
       />
