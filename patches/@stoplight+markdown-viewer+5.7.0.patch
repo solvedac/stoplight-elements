@@ -1,0 +1,20 @@
+diff --git a/node_modules/@stoplight/markdown-viewer/index.mjs b/node_modules/@stoplight/markdown-viewer/index.mjs
+index d0a59fe..dd1b3cc 100644
+--- a/node_modules/@stoplight/markdown-viewer/index.mjs
++++ b/node_modules/@stoplight/markdown-viewer/index.mjs
+@@ -840,12 +840,13 @@ let sanitizationSchema = null;
+ const buildSanitizationSchema = () => {
+     if (!sanitizationSchema) {
+         sanitizationSchema = deepmerge(defaultSchema, {
+-            tagNames: ['tabs', 'tab', 'codegroup', 'button'],
++            tagNames: ['tabs', 'tab', 'codegroup', 'button', 'solved-icon'],
+             attributes: {
+-                '*': ['className', 'style', 'id'],
++                '*': ['className', 'class', 'style', 'id'],
+                 code: ['title', 'lineNumbers', 'inline', 'highlightLines', 'lang', 'live', 'jsonSchema', 'http', 'resolved'],
+                 img: ['bg', 'focus', 'inline', 'invertOnDark'],
+                 blockquote: ['theme'],
++                'solved-icon': ['type'],
+             },
+         });
+         sanitizationSchema.clobber = ['name'];

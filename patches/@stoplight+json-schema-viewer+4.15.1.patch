@@ -1,0 +1,23 @@
+diff --git a/node_modules/@stoplight/json-schema-viewer/index.mjs b/node_modules/@stoplight/json-schema-viewer/index.mjs
+index b3814af..19487f4 100644
+--- a/node_modules/@stoplight/json-schema-viewer/index.mjs
++++ b/node_modules/@stoplight/json-schema-viewer/index.mjs
+@@ -369,6 +369,9 @@ const Types = ({ schemaNode }) => {
+     if (isReferenceNode(schemaNode)) {
+         return (React.createElement(Box, { as: "span", textOverflow: "truncate", "data-test": "property-type-ref" }, (_a = schemaNode.value) !== null && _a !== void 0 ? _a : '$ref'));
+     }
++    if (schemaNode?.originalFragment.allOf?.[0].$ref) {
++        return (React.createElement(Box, { as: "span", textOverflow: "truncate", "data-test": "property-type-ref" }, schemaNode.originalFragment.allOf[0].$ref.split('/').at(-1)));
++    }
+     if (isBooleanishNode(schemaNode)) {
+         return (React.createElement(Box, { as: "span", textOverflow: "truncate", color: "muted", "data-test": "property-type" }, schemaNode.fragment ? 'any' : 'never'));
+     }
+@@ -725,7 +728,7 @@ const SchemaRow = React.memo(({ schemaNode, nestingLevel, pl, parentNodeId, pare
+                                 e.preventDefault();
+                                 e.stopPropagation();
+                                 onGoToRef(schemaNode);
+-                            } }, "(go to ref)")) : null,
++                            } }, "(go to ref)")) : schemaNode?.originalFragment.allOf?.[0].$ref ? (React.createElement(Box, { as: "a", href: "/" + schemaNode?.originalFragment.allOf?.[0].$ref.replace('/components', ''), ml: 2, cursor: "pointer", color: "primary-light" }, "(go to ref)")) : null,
+                         schemaNode.subpath.length > 1 && schemaNode.subpath[0] === 'patternProperties' ? (React.createElement(Box, { ml: 2, color: "muted" }, "(pattern property)")) : null,
+                         choices.length > 1 && (React.createElement(Select, { "aria-label": "Pick a type", size: "sm", triggerTextPrefix: combiner ? `${COMBINER_NAME_MAP[combiner]}: ` : undefined, options: choices.map((choice, index) => ({
+                                 value: String(index),
